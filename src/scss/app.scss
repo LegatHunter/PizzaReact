@@ -1,11 +1,11 @@
-@import 'fonts';
-@import 'variables';
-@import 'libs/normalize';
-
-@import 'components/all';
+@use "fonts";
+@use "variables" as v;
+@use "libs/normalize" as n;
+@use "components/all";
+@use "sass:color";
 
 body {
-  background-color: $background;
+  background-color: v.$background;
 }
 
 .wrapper {
@@ -38,7 +38,7 @@ body {
 }
 
 .container {
-  width: $container-width;
+  width: v.$container-width;
   margin: 0 auto;
 
   &--cart {
@@ -69,7 +69,7 @@ body {
       height: 30px;
       margin-right: 10px;
       path {
-        stroke: $black;
+        stroke: v.$black;
         stroke-width: 1.9;
       }
     }
@@ -79,7 +79,7 @@ body {
     display: flex;
     align-items: center;
     cursor: pointer;
-    @include noselect();
+    @include n.noselect();
 
     span {
       display: inline-block;
@@ -91,17 +91,17 @@ body {
     span,
     svg,
     path {
-      transition: all $duration ease-in-out;
+      transition: all v.$duration ease-in-out;
     }
 
     &:hover {
       svg {
         path {
-          stroke: darken($color: #b6b6b6, $amount: 50);
+          stroke: color.adjust(#b6b6b6, $lightness: -50%);
         }
       }
       span {
-        color: darken($color: #b6b6b6, $amount: 50);
+        color: color.adjust(#b6b6b6, $lightness: -50%);
       }
     }
   }
@@ -109,7 +109,7 @@ body {
   &__item {
     display: flex;
     width: 100%;
-    border-top: 1px solid $gray-line;
+    border-top: 1px solid v.$gray-line;
     padding-top: 30px;
     margin-top: 30px;
 
@@ -183,14 +183,14 @@ body {
       width: 4%;
 
       .button {
-        border-color: darken($color: $gray-line, $amount: 10);
+        border-color: color.adjust(v.$gray-line, $lightness: -10%);
       }
 
       svg {
         transform: rotate(45deg);
 
         path {
-          fill: darken($color: $gray-line, $amount: 15);
+          fill: color.adjust(v.$gray-line, $lightness: -15%);
         }
       }
 
@@ -202,8 +202,8 @@ body {
         }
         &:hover,
         &:active {
-          border-color: darken($color: $gray-line, $amount: 80);
-          background-color: darken($color: $gray-line, $amount: 80);
+          border-color: color.adjust(v.$gray-line, $lightness: -80%);
+          background-color: color.adjust(v.$gray-line, $lightness: -80%);
         }
       }
     }
@@ -221,7 +221,7 @@ body {
 
         &:last-of-type {
           b {
-            color: $orange;
+            color: v.$orange;
           }
         }
       }
@@ -237,21 +237,20 @@ body {
         align-items: center;
         justify-content: center;
         width: 210px;
-
-        border-color: darken($color: $gray-line, $amount: 10);
+        border-color: color.adjust(v.$gray-line, $lightness: -10%);
 
         span {
-          color: darken($color: $gray-line, $amount: 20);
+          color: color.adjust(v.$gray-line, $lightness: -20%);
           font-weight: 500;
           font-weight: 600;
         }
 
         &:hover {
-          background-color: darken($color: $gray-line, $amount: 90);
-          border-color: darken($color: $gray-line, $amount: 90);
+          background-color: color.adjust(v.$gray-line, $lightness: 90%);
+          border-color: color.adjust(v.$gray-line, $lightness: 90%);
 
           span {
-            color: $gray-line;
+            color: v.$gray-line;
           }
         }
 

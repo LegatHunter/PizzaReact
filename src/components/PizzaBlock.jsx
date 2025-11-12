@@ -1,28 +1,42 @@
 import { useState } from "react"
 export default function PizzaBlock(props) {
-  const { title, price } = props
-  const [pizzaCount, setPizzaCount] = useState(0)
+  const { title, price, imageUrl, types, sizes, category, rating } = props
+  // const [pizzaCount, setPizzaCount] = useState(0)
+  const [pizzaSize, setPizzaSize] = useState(0)
+  const [pizzaTypes, setPizzaTypes] = useState(0)
 
-  const addPizza = () => {
-    setPizzaCount((prev) => prev + 1)
-  }
+  const typesName = ["тонкое", "традиционное"]
+
+  // const addPizza = () => {
+  //   setPizzaCount((prev) => prev + 1)
+  // }
   return (
     <div className='pizza-block'>
-      <img
-        className='pizza-block__image'
-        src='https://media.dodostatic.net/image/r:584x584/0199b77856ec79a986a2d582c2678fff.avif'
-        alt='Pizza'
-      />
+      <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
         <ul>
-          <li className='active'>тонкое</li>
-          <li>традиционное</li>
+          {types.map((el, i) => {
+            return (
+              <li
+                onClick={() => setPizzaTypes(i)}
+                className={i === pizzaTypes ? "active" : ""}>
+                {typesName[el]}
+              </li>
+            )
+          })}
         </ul>
         <ul>
-          <li className='active'>26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizes.map((el, i) => {
+            return (
+              <li
+                key={i}
+                onClick={() => setPizzaSize(i)}
+                className={i === pizzaSize ? "active" : ""}>
+                {el} см.
+              </li>
+            )
+          })}
         </ul>
       </div>
       <div className='pizza-block__bottom'>
@@ -39,10 +53,10 @@ export default function PizzaBlock(props) {
               fill='white'
             />
           </svg>
-          <span key={title} onClick={() => addPizza()}>
-            Добавить
-          </span>
-          <i>{pizzaCount}</i>
+          {/* <span key={title} onClick={() => addPizza()}> */}
+          <span>Добавить</span>
+          {/* <i>{pizzaCount}</i> */}
+          <i>{0}</i>
         </button>
       </div>
     </div>

@@ -1,4 +1,6 @@
-@import "../variables";
+@use "../libs/normalize" as n;
+@use "../variables";
+@use "sass:color";
 
 .categories {
   ul {
@@ -12,14 +14,14 @@
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
-      @include noselect();
+      @include n.noselect();
 
       &:hover {
-        background-color: darken(#f9f9f9, 2%);
+        background-color: color.adjust(#f9f9f9, $lightness: -2%);
       }
 
       &:active {
-        background-color: darken(#f9f9f9, 5%);
+        background-color: color.adjust(#f9f9f9, $lightness: -5%);
       }
 
       &.active {
