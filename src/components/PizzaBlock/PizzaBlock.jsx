@@ -19,6 +19,7 @@ export default function PizzaBlock(props) {
           {types.map((el, i) => {
             return (
               <li
+                key={crypto.randomUUID()}
                 onClick={() => setPizzaTypes(i)}
                 className={i === pizzaTypes ? "active" : ""}>
                 {typesName[el]}
@@ -30,7 +31,7 @@ export default function PizzaBlock(props) {
           {sizes.map((el, i) => {
             return (
               <li
-                key={i}
+                key={crypto.randomUUID()}
                 onClick={() => setPizzaSize(i)}
                 className={i === pizzaSize ? "active" : ""}>
                 {el} см.

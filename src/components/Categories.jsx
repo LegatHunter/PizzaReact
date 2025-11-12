@@ -17,7 +17,7 @@ export default function Categories() {
         {categories.map((cat, i) => {
           return (
             <li
-              key={i}
+              key={crypto.randomUUID()}
               onClick={() => setActiveIndex(i)}
               className={activeIndex === i ? "active" : ""}>
               {cat}

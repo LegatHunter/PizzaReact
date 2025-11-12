@@ -1,4 +1,14 @@
+import React, { useState } from "react"
+
 export default function Sort() {
+  const [toggleSort, setToggleSort] = useState(false)
+  const [activeSort, setActiveSort] = useState(0)
+
+  const list = ["популярности", "цене", "алфавиту"]
+  const autoClose = (i) => {
+    setActiveSort(i)
+    setToggleSort(false)
+  }
   return (
     <div className='sort'>
       <div className='sort__label'>
@@ -14,15 +24,25 @@ export default function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => setToggleSort((prev) => !prev)}>
+          {list[activeSort]}
+        </span>
       </div>
-      <div className='sort__popup'>
-        <ul>
-          <li className='active'>популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {toggleSort && (
+        <div className='sort__popup'>
+          <ul>
+            {list.map((el, i) => {
+              return (
+                <li
+                  onClick={() => autoClose(i)}
+                  className={activeSort === i && "active"}>
+                  {el}
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
