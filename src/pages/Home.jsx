@@ -4,35 +4,52 @@ import Categories from "../components/Categories"
 import Sort from "../components/Sort"
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock"
 import Skeleton from "../components/PizzaBlock/Skeleton"
+import Pagination from "../components/Pagination"
 
-export default function Home() {
+export default function Home({ searchPizza }) {
   const [items, setItems] = useState([])
-  const [isloading, setIsloading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const [categoryActiveIndex, setCategoryActiveIndex] = useState(0)
   const [activeSort, setActiveSort] = useState({
     name: "популярности",
     sortProp: "rating",
   })
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    setIsloading(true)
+    setIsLoading(true)
     const sortBy = activeSort.sortProp.replace("-", "")
     const order = activeSort.sortProp.includes("-") ? "asc" : "desc"
+    const category =
+      categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ""
+    const search = searchPizza ? `&search=${searchPizza}` : ""
 
     fetch(
-      `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?${
-        categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ""
-      }&sortBy=${sortBy}&order=${order}`
+      `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
     )
       .then((res) => {
         return res.json()
       })
       .then((json) => {
         setItems(json)
-        setIsloading(false)
+        setIsLoading(false)
       })
     window.scrollTo(0, 0)
-  }, [categoryActiveIndex, activeSort])
+  }, [categoryActiveIndex, activeSort, searchPizza, currentPage])
+
+  const pizzas = items
+    // ФИЛЬТРАЦЦИЯ НА СТОРОНЕ ФРОНТА
+    // .filter((el) => {
+    //   if (el.title.toLowerCase().includes(searchPizza.toLowerCase())) {
+    //     return true
+    //   }
+    //   return false
+    // })
+    .map((el) => <PizzaBlock key={crypto.randomUUID()} {...el} />)
+
+  const skeletons = [...new Array(items.length)].map((_, i) => (
+    <Skeleton key={i} />
+  ))
   return (
     <div className='container'>
       <div className='content__top'>
@@ -44,17 +61,16 @@ export default function Home() {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
-        {isloading
-          ? [...new Array(items.length)].map((_, i) => <Skeleton key={i} />)
-          : items.map((el) => <PizzaBlock key={crypto.randomUUID()} {...el} />)}
+        {isLoading ? skeletons : pizzas}
         {/* {items.map((el) =>
-                isloading ? (
+                isLoading ? (
                   <Skeleton />
                 ) : (
                   <PizzaBlock key={crypto.randomUUID()} {...el} />
                 )
               )} */}
       </div>
+      <Pagination onPageChange={(number) => setCurrentPage(number)} />
     </div>
   )
 }
