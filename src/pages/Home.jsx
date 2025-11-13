@@ -8,9 +8,22 @@ import Skeleton from "../components/PizzaBlock/Skeleton"
 export default function Home() {
   const [items, setItems] = useState([])
   const [isloading, setIsloading] = useState(true)
-  const API = "https://6914dcc43746c71fe049df36.mockapi.io/Pizza"
+  const [categoryActiveIndex, setCategoryActiveIndex] = useState(0)
+  const [activeSort, setActiveSort] = useState({
+    name: "популярности",
+    sortProp: "rating",
+  })
+
   useEffect(() => {
-    fetch(API)
+    setIsloading(true)
+    const sortBy = activeSort.sortProp.replace("-", "")
+    const order = activeSort.sortProp.includes("-") ? "asc" : "desc"
+
+    fetch(
+      `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?${
+        categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ""
+      }&sortBy=${sortBy}&order=${order}`
+    )
       .then((res) => {
         return res.json()
       })
@@ -18,17 +31,21 @@ export default function Home() {
         setItems(json)
         setIsloading(false)
       })
-  }, [])
+    window.scrollTo(0, 0)
+  }, [categoryActiveIndex, activeSort])
   return (
-    <>
+    <div className='container'>
       <div className='content__top'>
-        <Categories />
-        <Sort />
+        <Categories
+          activeIndex={categoryActiveIndex}
+          setActiveIndex={setCategoryActiveIndex}
+        />
+        <Sort activeSort={activeSort} setActiveSort={(i) => setActiveSort(i)} />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
         {isloading
-          ? [...new Array(4)].map((_, i) => <Skeleton key={i} />)
+          ? [...new Array(items.length)].map((_, i) => <Skeleton key={i} />)
           : items.map((el) => <PizzaBlock key={crypto.randomUUID()} {...el} />)}
         {/* {items.map((el) =>
                 isloading ? (
@@ -38,6 +55,6 @@ export default function Home() {
                 )
               )} */}
       </div>
-    </>
+    </div>
   )
 }

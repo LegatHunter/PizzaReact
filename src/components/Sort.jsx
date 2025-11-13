@@ -1,10 +1,16 @@
 import React, { useState } from "react"
 
-export default function Sort() {
+export default function Sort({ activeSort, setActiveSort }) {
   const [toggleSort, setToggleSort] = useState(false)
-  const [activeSort, setActiveSort] = useState(0)
 
-  const list = ["популярности", "цене", "алфавиту"]
+  const list = [
+    { name: "популярности ↑", sortProp: "rating" },
+    { name: "популярности ↓", sortProp: "-rating" },
+    { name: "цене ↑", sortProp: "price" },
+    { name: "цене ↓", sortProp: "-price" },
+    { name: "алфавиту ↑", sortProp: "title" },
+    { name: "алфавиту ↓", sortProp: "title" },
+  ]
   const autoClose = (i) => {
     setActiveSort(i)
     setToggleSort(false)
@@ -25,7 +31,7 @@ export default function Sort() {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setToggleSort((prev) => !prev)}>
-          {list[activeSort]}
+          {activeSort.name}
         </span>
       </div>
       {toggleSort && (
@@ -34,9 +40,12 @@ export default function Sort() {
             {list.map((el, i) => {
               return (
                 <li
-                  onClick={() => autoClose(i)}
-                  className={activeSort === i && "active"}>
-                  {el}
+                  key={i}
+                  onClick={() => autoClose(el)}
+                  className={
+                    activeSort.sortProp === el.sortProp ? "active" : ""
+                  }>
+                  {el.name}
                 </li>
               )
             })}

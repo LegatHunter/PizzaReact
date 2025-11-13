@@ -1,8 +1,6 @@
-import React, { useState } from "react"
+// import React, { useState } from "react"
 
-export default function Categories() {
-  const [activeIndex, setActiveIndex] = useState(0)
-
+export default function Categories({ activeIndex, setActiveIndex }) {
   const categories = [
     "Все",
     "Мясные",
