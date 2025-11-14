@@ -5,22 +5,25 @@ import Home from "./pages/Home"
 import Cart from "./pages/Cart"
 import NotFound from "./pages/NotFound"
 import { Route, Routes } from "react-router-dom"
+
+export const AppContext = React.createContext("")
+
 function App() {
   const [searchPizza, setSearchPizza] = useState("")
 
   return (
-    <>
+    <AppContext.Provider value={{ searchPizza, setSearchPizza }}>
       <div className='wrapper'>
-        <Header searchPizza={searchPizza} setSearchPizza={setSearchPizza} />
+        <Header />
         <div className='content'>
           <Routes>
-            <Route path='/' element={<Home searchPizza={searchPizza} />} />
+            <Route path='/' element={<Home value={searchPizza} />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
       </div>
-    </>
+    </AppContext.Provider>
   )
 }
 

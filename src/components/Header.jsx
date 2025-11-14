@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Search from "./Search"
 
-export default function Header({ searchPizza, setSearchPizza }) {
+export default function Header() {
   return (
     <div className='header'>
       <div className='container'>
@@ -14,7 +14,7 @@ export default function Header({ searchPizza, setSearchPizza }) {
             </div>
           </div>
         </Link>
-        <Search searchPizza={searchPizza} setSearchPizza={setSearchPizza} />
+        <Search />
         <div className='header__cart'>
           <Link to='/cart' className='button button--cart'>
             <span>520 ₽</span>

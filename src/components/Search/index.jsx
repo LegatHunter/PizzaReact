@@ -1,6 +1,9 @@
+import React from "react"
 import styles from "./Search.module.sass"
+import { AppContext } from "../../App"
 
-export default function Search({ searchPizza, setSearchPizza }) {
+export default function Search() {
+  const { searchPizza, setSearchPizza } = React.useContext(AppContext)
   return (
     <div className={styles.root}>
       <svg
