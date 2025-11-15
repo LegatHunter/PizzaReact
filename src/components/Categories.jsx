@@ -1,14 +1,15 @@
 // import React, { useState } from "react"
 
-export default function Categories({ activeIndex, setActiveIndex }) {
+export default function Categories({ onChangeCategory, categoryID }) {
   const categories = [
     "Все",
     "Мясные",
     "Вегетарианские",
     "Гриль",
     "Острые",
-    "Закрытые",
+    "Римские",
   ]
+
   return (
     <div className='categories'>
       <ul>
@@ -16,8 +17,8 @@ export default function Categories({ activeIndex, setActiveIndex }) {
           return (
             <li
               key={crypto.randomUUID()}
-              onClick={() => setActiveIndex(i)}
-              className={activeIndex === i ? "active" : ""}>
+              onClick={() => onChangeCategory(i)}
+              className={categoryID === i ? "active" : ""}>
               {cat}
             </li>
           )

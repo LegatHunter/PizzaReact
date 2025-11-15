@@ -10,7 +10,7 @@ export default function Pagination({ onPageChange }) {
       previousLabel='<'
       onPageChange={(e) => onPageChange(e.selected + 1)}
       pageRangeDisplayed={8}
-      pageCount={4}
+      pageCount={5}
       renderOnZeroPageCount={null}
     />
   )

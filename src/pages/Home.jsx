@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
-
+import { useSelector, useDispatch } from "react-redux"
+import { setCategoryID } from "../redux/slices/filterSlice"
 import Categories from "../components/Categories"
 import Sort from "../components/Sort"
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock"
@@ -8,10 +9,15 @@ import Pagination from "../components/Pagination"
 import { AppContext } from "../App"
 
 export default function Home() {
+  const dispatch = useDispatch()
+  const categoryID = useSelector((state) => state.filter.categoryID)
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryID(id))
+  }
   const { searchPizza } = useContext(AppContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [categoryActiveIndex, setCategoryActiveIndex] = useState(0)
+  // const [categoryActiveIndex, setCategoryActiveIndex] = useState(0)
   const [activeSort, setActiveSort] = useState({
     name: "популярности",
     sortProp: "rating",
@@ -22,8 +28,7 @@ export default function Home() {
     setIsLoading(true)
     const sortBy = activeSort.sortProp.replace("-", "")
     const order = activeSort.sortProp.includes("-") ? "asc" : "desc"
-    const category =
-      categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ""
+    const category = categoryID > 0 ? `category=${categoryID}` : ""
     const search = searchPizza ? `&search=${searchPizza}` : ""
 
     fetch(
@@ -37,7 +42,7 @@ export default function Home() {
         setIsLoading(false)
       })
     window.scrollTo(0, 0)
-  }, [categoryActiveIndex, activeSort, searchPizza, currentPage])
+  }, [categoryID, activeSort, searchPizza, currentPage])
 
   const pizzas = items
     // ФИЛЬТРАЦЦИЯ НА СТОРОНЕ ФРОНТА
@@ -56,8 +61,8 @@ export default function Home() {
     <div className='container'>
       <div className='content__top'>
         <Categories
-          activeIndex={categoryActiveIndex}
-          setActiveIndex={setCategoryActiveIndex}
+          categoryID={categoryID}
+          onChangeCategory={onChangeCategory}
         />
         <Sort activeSort={activeSort} setActiveSort={(i) => setActiveSort(i)} />
       </div>
