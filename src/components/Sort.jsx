@@ -9,7 +9,7 @@ export default function Sort({ activeSort, setActiveSort }) {
     { name: "цене ↑", sortProp: "price" },
     { name: "цене ↓", sortProp: "-price" },
     { name: "алфавиту ↑", sortProp: "title" },
-    { name: "алфавиту ↓", sortProp: "title" },
+    { name: "алфавиту ↓", sortProp: "-title" },
   ]
   const autoClose = (i) => {
     setActiveSort(i)
