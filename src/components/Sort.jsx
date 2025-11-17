@@ -1,18 +1,22 @@
 import React, { useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { setSort } from "../redux/slices/filterSlice"
 
-export default function Sort({ activeSort, setActiveSort }) {
+const list = [
+  { name: "популярности ↑", sortProp: "rating" },
+  { name: "популярности ↓", sortProp: "-rating" },
+  { name: "цене ↑", sortProp: "price" },
+  { name: "цене ↓", sortProp: "-price" },
+  { name: "алфавиту ↑", sortProp: "title" },
+  { name: "алфавиту ↓", sortProp: "-title" },
+]
+export default function Sort() {
+  const dispatch = useDispatch()
+  const sort = useSelector((state) => state.filter.sort)
   const [toggleSort, setToggleSort] = useState(false)
 
-  const list = [
-    { name: "популярности ↑", sortProp: "rating" },
-    { name: "популярности ↓", sortProp: "-rating" },
-    { name: "цене ↑", sortProp: "price" },
-    { name: "цене ↓", sortProp: "-price" },
-    { name: "алфавиту ↑", sortProp: "title" },
-    { name: "алфавиту ↓", sortProp: "title" },
-  ]
-  const autoClose = (i) => {
-    setActiveSort(i)
+  const autoClose = (obj) => {
+    dispatch(setSort(obj))
     setToggleSort(false)
   }
   return (
@@ -30,9 +34,7 @@ export default function Sort({ activeSort, setActiveSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setToggleSort((prev) => !prev)}>
-          {activeSort.name}
-        </span>
+        <span onClick={() => setToggleSort((prev) => !prev)}>{sort.name}</span>
       </div>
       {toggleSort && (
         <div className='sort__popup'>
@@ -42,9 +44,7 @@ export default function Sort({ activeSort, setActiveSort }) {
                 <li
                   key={i}
                   onClick={() => autoClose(el)}
-                  className={
-                    activeSort.sortProp === el.sortProp ? "active" : ""
-                  }>
+                  className={sort.sortProp === el.sortProp ? "active" : ""}>
                   {el.name}
                 </li>
               )
