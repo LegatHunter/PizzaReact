@@ -1,28 +1,38 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, useRef } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
-import { setCategoryID } from "../redux/slices/filterSlice"
+import qs from "qs"
+import { useNavigate } from "react-router-dom"
+import {
+  setCategoryID,
+  setPageCount,
+  setFilters,
+} from "../redux/slices/filterSlice"
 import Categories from "../components/Categories"
-import Sort from "../components/Sort"
+import Sort, { list } from "../components/Sort"
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock"
 import Skeleton from "../components/PizzaBlock/Skeleton"
 import Pagination from "../components/Pagination"
 import { AppContext } from "../App"
 
 export default function Home() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { categoryID, sort } = useSelector((state) => state.filter)
-
-  const onChangeCategory = (id) => {
-    dispatch(setCategoryID(id))
-  }
+  const isSearch = useRef(false)
+  const { categoryID, sort, pageCount } = useSelector((state) => state.filter)
   const { searchPizza } = useContext(AppContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const [currentPage, setCurrentPage] = useState(1)
+  const onChangeCategory = (id) => {
+    dispatch(setCategoryID(id))
+  }
 
-  useEffect(() => {
+  const onChangePage = (number) => {
+    dispatch(setPageCount(number))
+  }
+
+  const fetchPizzas = () => {
     setIsLoading(true)
     const sortBy = sort.sortProp.replace("-", "")
     const order = sort.sortProp.includes("-") ? "asc" : "desc"
@@ -30,14 +40,38 @@ export default function Home() {
     const search = searchPizza ? `&search=${searchPizza}` : ""
     axios
       .get(
-        `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
+        `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?page=${pageCount}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
       )
       .then((res) => {
         setItems(res.data)
         setIsLoading(false)
       })
+  }
+  useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1))
+      const sort = list.find((obj) => obj.sortProp === params.sortProp)
+      dispatch(setFilters({ ...params, sort }))
+      isSearch.current = true
+    }
+  }, [])
+
+  useEffect(() => {
     window.scrollTo(0, 0)
-  }, [categoryID, sort.sortProp, searchPizza, currentPage])
+    if (!isSearch.current) {
+      fetchPizzas()
+    }
+    isSearch.current = false
+  }, [categoryID, sort.sortProp, searchPizza, pageCount])
+
+  useEffect(() => {
+    const queryString = qs.stringify({
+      sortProp: sort.sortProp,
+      categoryID,
+      pageCount,
+    })
+    navigate(`?${queryString}`)
+  }, [categoryID, sort.sortProp, searchPizza, pageCount])
 
   const pizzas = items
     // ФИЛЬТРАЦЦИЯ НА СТОРОНЕ ФРОНТА
@@ -72,7 +106,7 @@ export default function Home() {
                 )
               )} */}
       </div>
-      <Pagination onPageChange={(number) => setCurrentPage(number)} />
+      <Pagination value={pageCount} onPageChange={onChangePage} />
     </div>
   )
 }
