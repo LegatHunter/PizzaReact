@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
 import { useSelector, useDispatch } from "react-redux"
+import axios from "axios"
 import { setCategoryID } from "../redux/slices/filterSlice"
 import Categories from "../components/Categories"
 import Sort from "../components/Sort"
@@ -10,39 +11,33 @@ import { AppContext } from "../App"
 
 export default function Home() {
   const dispatch = useDispatch()
-  const categoryID = useSelector((state) => state.filter.categoryID)
+  const { categoryID, sort } = useSelector((state) => state.filter)
+
   const onChangeCategory = (id) => {
     dispatch(setCategoryID(id))
   }
   const { searchPizza } = useContext(AppContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  // const [categoryActiveIndex, setCategoryActiveIndex] = useState(0)
-  const [activeSort, setActiveSort] = useState({
-    name: "популярности",
-    sortProp: "rating",
-  })
+
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     setIsLoading(true)
-    const sortBy = activeSort.sortProp.replace("-", "")
-    const order = activeSort.sortProp.includes("-") ? "asc" : "desc"
+    const sortBy = sort.sortProp.replace("-", "")
+    const order = sort.sortProp.includes("-") ? "asc" : "desc"
     const category = categoryID > 0 ? `category=${categoryID}` : ""
     const search = searchPizza ? `&search=${searchPizza}` : ""
-
-    fetch(
-      `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
-    )
+    axios
+      .get(
+        `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?page=${currentPage}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
+      )
       .then((res) => {
-        return res.json()
-      })
-      .then((json) => {
-        setItems(json)
+        setItems(res.data)
         setIsLoading(false)
       })
     window.scrollTo(0, 0)
-  }, [categoryID, activeSort, searchPizza, currentPage])
+  }, [categoryID, sort.sortProp, searchPizza, currentPage])
 
   const pizzas = items
     // ФИЛЬТРАЦЦИЯ НА СТОРОНЕ ФРОНТА
@@ -64,7 +59,7 @@ export default function Home() {
           categoryID={categoryID}
           onChangeCategory={onChangeCategory}
         />
-        <Sort activeSort={activeSort} setActiveSort={(i) => setActiveSort(i)} />
+        <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>
