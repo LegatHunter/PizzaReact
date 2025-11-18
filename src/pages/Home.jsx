@@ -24,28 +24,31 @@ import { AppContext } from "../App"
 export default function Home() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const isSearch = useRef(false)
   const isMounted = useRef(false)
 
   const { categoryID, sort, pageCount } = useSelector((state) => state.filter)
-
   const { searchPizza } = useContext(AppContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const onChangeCategory = useCallback((idx) => {
-    dispatch(setCategoryID(idx))
-  })
+  const onChangeCategory = useCallback(
+    (idx) => {
+      dispatch(setCategoryID(idx))
+    },
+    [dispatch]
+  )
 
   const onChangePage = (number) => {
     dispatch(setPageCount(number))
   }
+
   const fetchPizzas = () => {
     setIsLoading(true)
     const sortBy = sort.sortProp.replace("-", "")
     const order = sort.sortProp.includes("-") ? "asc" : "desc"
     const category = categoryID > 0 ? `category=${categoryID}` : ""
     const search = searchPizza ? `&search=${searchPizza}` : ""
+
     axios
       .get(
         `https://6914dcc43746c71fe049df36.mockapi.io/Pizza?page=${pageCount}&limit=8&${category}&sortBy=${sortBy}&order=${order}${search}`
@@ -54,8 +57,13 @@ export default function Home() {
         setItems(res.data)
         setIsLoading(false)
       })
+      .catch((error) => {
+        console.error("Ошибка загрузки пицц:", error)
+        setIsLoading(false)
+      })
   }
-  // Если изменили параметры и был первый рендер
+
+  // Сохраняем параметры в URL при изменении
   useEffect(() => {
     if (isMounted.current) {
       const queryString = qs.stringify({
@@ -66,38 +74,36 @@ export default function Home() {
       navigate(`?${queryString}`)
     }
     isMounted.current = true
-  }, [categoryID, sort.sortProp, pageCount])
-  //Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
+  }, [categoryID, sort.sortProp, pageCount, navigate])
+
+  // Парсим параметры из URL при первом рендере
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
-      const sort = list.find((obj) => obj.sortProp === params.sortProp)
-      dispatch(setFilters({ ...params, sort }))
-      isSearch.current = true
+      const sortObj = list.find((obj) => obj.sortProp === params.sortProp)
+      dispatch(
+        setFilters({
+          ...params,
+          sort: sortObj,
+          categoryID: Number(params.categoryID),
+          pageCount: Number(params.pageCount),
+        })
+      )
     }
-  }, [])
-  //Если был первый рендер, то запрашиваем пиццы
+  }, [dispatch])
+
+  // Загружаем пиццы при изменении параметров
   useEffect(() => {
     window.scrollTo(0, 0)
-    if (!isSearch.current) {
-      fetchPizzas()
-    }
-    isSearch.current = false
+    fetchPizzas()
   }, [categoryID, sort.sortProp, searchPizza, pageCount])
 
-  const pizzas = items
-    // ФИЛЬТРАЦЦИЯ НА СТОРОНЕ ФРОНТА
-    // .filter((el) => {
-    //   if (el.title.toLowerCase().includes(searchPizza.toLowerCase())) {
-    //     return true
-    //   }
-    //   return false
-    // })
-    .map((el) => <PizzaBlock key={crypto.randomUUID()} {...el} />)
-
-  const skeletons = [...new Array(items.length)].map((_, i) => (
-    <Skeleton key={i} />
+  const pizzas = items.map((el) => (
+    <PizzaBlock key={el.id || crypto.randomUUID()} {...el} />
   ))
+
+  const skeletons = [...new Array(8)].map((_, i) => <Skeleton key={i} />)
+
   return (
     <div className='container'>
       <div className='content__top'>
@@ -108,16 +114,7 @@ export default function Home() {
         <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
-      <div className='content__items'>
-        {isLoading ? skeletons : pizzas}
-        {/* {items.map((el) =>
-                isLoading ? (
-                  <Skeleton />
-                ) : (
-                  <PizzaBlock key={crypto.randomUUID()} {...el} />
-                )
-              )} */}
-      </div>
+      <div className='content__items'>{isLoading ? skeletons : pizzas}</div>
       <Pagination value={pageCount} onPageChange={onChangePage} />
     </div>
   )

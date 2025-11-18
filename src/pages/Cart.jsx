@@ -1,6 +1,26 @@
 import { Link } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import CartItem from "../components/CartItem"
+import { clearItems } from "../redux/slices/cartSlice"
+import CartEmpty from "../components/CartEmpty"
 
 export default function Cart() {
+  const dispatch = useDispatch()
+  const { totalPrice, items } = useSelector((state) => state.cart)
+
+  const onClickClear = () => {
+    if (window.confirm("Уверен?")) {
+      dispatch(clearItems())
+    }
+  }
+
+  // const totalPrice = useSelector((state) => state.cart.totalPrice)
+  const totalCount = items.reduce((acc, item) => {
+    return acc + item.count
+  }, 0)
+  if (!totalPrice) {
+    return <CartEmpty />
+  }
   return (
     <div className='container container--cart'>
       <div className='cart'>
@@ -8,114 +28,21 @@ export default function Cart() {
           <h2 className='content__title'>
             <img src='/img/cart.svg' alt='' /> Корзина
           </h2>
-          <div className='cart__clear'>
+          <div onClick={onClickClear} className='cart__clear'>
             <img src='/img/trash.svg' alt='' />
             <span>Очистить корзину</span>
           </div>
         </div>
-        <div className='content__items'>
-          <div className='cart__item'>
-            <div className='cart__item-img'>
-              <img
-                className='pizza-block__image'
-                src='https://media.dodostatic.net/image/r:584x584/0198bf57bc517218ab93c762f4b0193e.avif'
-                alt='Pizza'
-              />
-            </div>
-            <div className='cart__item-info'>
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
-            </div>
-            <div className='cart__item-count'>
-              <div className='button button--outline button--circle cart__item-count-minus'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-              <b>2</b>
-              <div className='button button--outline button--circle cart__item-count-plus'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-            </div>
-            <div className='cart__item-price'>
-              <b>770 ₽</b>
-            </div>
-            <div className='cart__item-remove'>
-              <div className='button button--outline button--circle'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='content__items'>
-          <div className='cart__item'>
-            <div className='cart__item-img'>
-              <img
-                className='pizza-block__image'
-                src='https://media.dodostatic.net/image/r:584x584/0198bf57bc517218ab93c762f4b0193e.avif'
-                alt='Pizza'
-              />
-            </div>
-            <div className='cart__item-info'>
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
-            </div>
-            <div className='cart__item-count'>
-              <div className='button button--outline button--circle cart__item-count-minus'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-              <b>2</b>
-              <div className='button button--outline button--circle cart__item-count-plus'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-            </div>
-            <div className='cart__item-price'>
-              <b>770 ₽</b>
-            </div>
-            <div className='cart__item-remove'>
-              <div className='button button--outline button--circle'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='content__items'>
-          <div className='cart__item'>
-            <div className='cart__item-img'>
-              <img
-                className='pizza-block__image'
-                src='https://media.dodostatic.net/image/r:584x584/0198bf57bc517218ab93c762f4b0193e.avif'
-                alt='Pizza'
-              />
-            </div>
-            <div className='cart__item-info'>
-              <h3>Сырный цыпленок</h3>
-              <p>тонкое тесто, 26 см.</p>
-            </div>
-            <div className='cart__item-count'>
-              <div className='button button--outline button--circle cart__item-count-minus'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-              <b>2</b>
-              <div className='button button--outline button--circle cart__item-count-plus'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-            </div>
-            <div className='cart__item-price'>
-              <b>770 ₽</b>
-            </div>
-            <div className='cart__item-remove'>
-              <div className='button button--outline button--circle'>
-                <img src='/img/plus.svg' alt='' />
-              </div>
-            </div>
-          </div>
-        </div>
+        {items.map((item) => (
+          <CartItem key={item.id} {...item} />
+        ))}
         <div className='cart__bottom'>
           <div className='cart__bottom-details'>
             <span>
-              Всего пицц: <b>3 шт.</b>{" "}
+              Всего пицц: <b>{totalCount} шт.</b>{" "}
             </span>
             <span>
-              Сумма заказа: <b>900 ₽</b>{" "}
+              Сумма заказа: <b>{totalPrice} ₽</b>{" "}
             </span>
           </div>
           <div className='cart__bottom-buttons'>
