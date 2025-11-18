@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react"
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useCallback,
+} from "react"
 import { useSelector, useDispatch } from "react-redux"
 import axios from "axios"
 import qs from "qs"
@@ -19,19 +25,21 @@ export default function Home() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isSearch = useRef(false)
+  const isMounted = useRef(false)
+
   const { categoryID, sort, pageCount } = useSelector((state) => state.filter)
+
   const { searchPizza } = useContext(AppContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const onChangeCategory = (id) => {
-    dispatch(setCategoryID(id))
-  }
+  const onChangeCategory = useCallback((idx) => {
+    dispatch(setCategoryID(idx))
+  })
 
   const onChangePage = (number) => {
     dispatch(setPageCount(number))
   }
-
   const fetchPizzas = () => {
     setIsLoading(true)
     const sortBy = sort.sortProp.replace("-", "")
@@ -47,6 +55,19 @@ export default function Home() {
         setIsLoading(false)
       })
   }
+  // Если изменили параметры и был первый рендер
+  useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProp: sort.sortProp,
+        categoryID,
+        pageCount,
+      })
+      navigate(`?${queryString}`)
+    }
+    isMounted.current = true
+  }, [categoryID, sort.sortProp, pageCount])
+  //Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
@@ -55,22 +76,13 @@ export default function Home() {
       isSearch.current = true
     }
   }, [])
-
+  //Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     window.scrollTo(0, 0)
     if (!isSearch.current) {
       fetchPizzas()
     }
     isSearch.current = false
-  }, [categoryID, sort.sortProp, searchPizza, pageCount])
-
-  useEffect(() => {
-    const queryString = qs.stringify({
-      sortProp: sort.sortProp,
-      categoryID,
-      pageCount,
-    })
-    navigate(`?${queryString}`)
   }, [categoryID, sort.sortProp, searchPizza, pageCount])
 
   const pizzas = items
