@@ -1,30 +1,28 @@
-import React, { useEffect, useContext, useRef, useCallback } from "react"
+import React, { useEffect, useRef, useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
 
 import qs from "qs"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import {
   setCategoryID,
   setPageCount,
   setFilters,
+  selectFilter,
 } from "../redux/slices/filterSlice"
 import Categories from "../components/Categories"
 import Sort, { list } from "../components/Sort"
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock"
 import Skeleton from "../components/PizzaBlock/Skeleton"
 import Pagination from "../components/Pagination"
-import { AppContext } from "../App"
-import { fetchPizzas } from "../redux/slices/pizzasSlice"
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice"
 
 export default function Home() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isMounted = useRef(false)
 
-  const { items, status } = useSelector((state) => state.pizzas)
-  const { categoryID, sort, pageCount } = useSelector((state) => state.filter)
-
-  const { searchPizza } = useContext(AppContext)
+  const { items, status } = useSelector(selectPizzaData)
+  const { categoryID, sort, pageCount, searchValue } = useSelector(selectFilter)
 
   const onChangeCategory = useCallback(
     (idx) => {
@@ -41,7 +39,7 @@ export default function Home() {
     const sortBy = sort.sortProp.replace("-", "")
     const order = sort.sortProp.includes("-") ? "asc" : "desc"
     const category = categoryID > 0 ? `category=${categoryID}` : ""
-    const search = searchPizza ? `&search=${searchPizza}` : ""
+    const search = searchValue ? `&search=${searchValue}` : ""
 
     dispatch(
       fetchPizzas({
@@ -54,6 +52,7 @@ export default function Home() {
     )
     window.scrollTo(0, 0)
   }
+
   // Сохраняем параметры в URL при изменении
   useEffect(() => {
     if (isMounted.current) {
@@ -87,10 +86,12 @@ export default function Home() {
   useEffect(() => {
     window.scrollTo(0, 0)
     getPizzas()
-  }, [categoryID, sort.sortProp, searchPizza, pageCount])
+  }, [categoryID, sort.sortProp, searchValue, pageCount])
 
   const pizza = items.map((el) => (
-    <PizzaBlock key={el.id || crypto.randomUUID()} {...el} />
+    <Link to={`/pizza/${el.id}`} key={el.id}>
+      <PizzaBlock {...el} />
+    </Link>
   ))
 
   const skeletons = [...new Array(8)].map((_, i) => <Skeleton key={i} />)

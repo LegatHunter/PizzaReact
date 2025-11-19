@@ -1,6 +1,6 @@
 [
   {
-    "id": 0,
+    "id": "0",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0199b8e98ec871ab8a443887a3e1a136.avif",
     "title": "Пицца с хреном",
     "types": [0, 1],
@@ -10,7 +10,7 @@
     "rating": 4
   },
   {
-    "id": 1,
+    "id": "1",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/019591b9eb1a74d1a92a0f55ba317105.avif",
     "title": "Мясная",
     "types": [0],
@@ -20,7 +20,7 @@
     "rating": 6
   },
   {
-    "id": 2,
+    "id": "2",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/019591ab87457239bfe765449966ab92.avif",
     "title": "Додо",
     "types": [0],
@@ -30,7 +30,7 @@
     "rating": 4
   },
   {
-    "id": 3,
+    "id": "3",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf57bc517218ab93c762f4b0193e.avif",
     "title": "Пепперони фреш",
     "types": [1],
@@ -40,7 +40,7 @@
     "rating": 2
   },
   {
-    "id": 4,
+    "id": "4",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf24170179679a7872f2ddf16d18.avif",
     "title": "Чесночный цыпленок",
     "types": [0, 1],
@@ -50,7 +50,7 @@
     "rating": 8
   },
   {
-    "id": 5,
+    "id": "5",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf25089a74d08e08629b41ed39ee.avif",
     "title": "Пикантные колбаски",
     "types": [0],
@@ -60,7 +60,7 @@
     "rating": 2
   },
   {
-    "id": 6,
+    "id": "6",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/019a10a0c9ab792190a97768688bc6e9.avif",
     "title": "Терияки",
     "types": [0, 1],
@@ -70,7 +70,7 @@
     "rating": 9
   },
   {
-    "id": 7,
+    "id": "7",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/019a109fe01672189d029a725ba99705.avif",
     "title": "Четыре сыра",
     "types": [0, 1],
@@ -80,7 +80,7 @@
     "rating": 10
   },
   {
-    "id": 8,
+    "id": "8",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf40eb1171aabe90b1b3ce07c0c5.avif",
     "title": "Сырная 👶",
     "types": [0, 1],
@@ -90,7 +90,7 @@
     "rating": 10
   },
   {
-    "id": 9,
+    "id": "9",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf4f806371f19d529f9e9e7dba36.avif",
     "title": "Чоризо фреш",
     "types": [0, 1],
@@ -100,7 +100,7 @@
     "rating": 4
   },
   {
-    "id": 10,
+    "id": "10",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf283b2372ea8e7cfc8adae9ea84.avif",
     "title": "Ветчина и сыр",
     "types": [0],
@@ -110,7 +110,7 @@
     "rating": 6
   },
   {
-    "id": 11,
+    "id": "11",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf3e424371b49f0b8d7dbe320a70.avif",
     "title": "Двойной цыпленок",
     "types": [0],
@@ -120,7 +120,7 @@
     "rating": 4
   },
   {
-    "id": 12,
+    "id": "12",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf4f806371f19d529f9e9e7dba36.avif",
     "title": "Охотничья",
     "types": [1],
@@ -130,7 +130,7 @@
     "rating": 2
   },
   {
-    "id": 13,
+    "id": "13",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf4d218b75d4a3e667fc2f6d7643.avif",
     "title": "Креветка и песто",
     "types": [0, 2],
@@ -140,7 +140,7 @@
     "rating": 8
   },
   {
-    "id": 14,
+    "id": "14",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf4624de7324966f2fc62c3ca673.avif",
     "title": "Чилл Грилл",
     "types": [0],
@@ -150,7 +150,7 @@
     "rating": 2
   },
   {
-    "id": 15,
+    "id": "15",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198c659b357718f9c77ad0dc392dadf.avif",
     "title": "Ветчина и грибы",
     "types": [0, 1],
@@ -160,7 +160,7 @@
     "rating": 9
   },
   {
-    "id": 16,
+    "id": "16",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf2e5d2973a4bf5ec61161496f91.avif",
     "title": "Аррива!",
     "types": [0, 1, 4],
@@ -170,7 +170,7 @@
     "rating": 10
   },
   {
-    "id": 17,
+    "id": "17",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf5147f27780a3290a82692e7a36.avif",
     "title": "Креветки со сладким чили",
     "types": [0, 1],
@@ -180,7 +180,7 @@
     "rating": 10
   },
   {
-    "id": 18,
+    "id": "18",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf2b03447079941f2d5ac6e986a9.avif",
     "title": "Карбонара",
     "types": [0, 1],
@@ -190,7 +190,7 @@
     "rating": 4
   },
   {
-    "id": 19,
+    "id": "19",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf4e67f474f991f04a46a49af5e6.avif",
     "title": "Жюльен",
     "types": [0],
@@ -200,7 +200,7 @@
     "rating": 6
   },
   {
-    "id": 20,
+    "id": "20",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf443ff778d0a9a9b3e628d39b95.avif",
     "title": "Песто",
     "types": [0],
@@ -210,7 +210,7 @@
     "rating": 4
   },
   {
-    "id": 21,
+    "id": "21",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0199b77856ec79a986a2d582c2678fff.avif",
     "title": "Бургер-пицца",
     "types": [1],
@@ -220,7 +220,7 @@
     "rating": 2
   },
   {
-    "id": 22,
+    "id": "22",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf44f21b753ab8d43dada31ecee1.avif",
     "title": "Сырный цыпленок",
     "types": [0, 1],
@@ -230,7 +230,7 @@
     "rating": 8
   },
   {
-    "id": 23,
+    "id": "23",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf39dda97082912be8d1f3f2b233.avif",
     "title": "Пепперони",
     "types": [0],
@@ -240,7 +240,7 @@
     "rating": 2
   },
   {
-    "id": 24,
+    "id": "24",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf530345746e98039478001d5108.avif",
     "title": "Гавайская",
     "types": [0, 1],
@@ -250,7 +250,7 @@
     "rating": 9
   },
   {
-    "id": 25,
+    "id": "25",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf2cc87a79baa946c53b634615f4.avif",
     "title": "Цыпленок барбекю",
     "types": [0, 1],
@@ -260,7 +260,7 @@
     "rating": 10
   },
   {
-    "id": 26,
+    "id": "26",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf265f7371bcb8a99321fecf2716.avif",
     "title": "Цыпленок ранч",
     "types": [0, 1],
@@ -270,7 +270,7 @@
     "rating": 10
   },
   {
-    "id": 27,
+    "id": "27",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf3d788b78d491891a6da5e94bf1.avif",
     "title": "Маргарита",
     "types": [0, 1],
@@ -280,7 +280,7 @@
     "rating": 10
   },
   {
-    "id": 28,
+    "id": "28",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf439a007604880d0231be87cd3e.avif",
     "title": "Диабло",
     "types": [0, 1],
@@ -290,7 +290,7 @@
     "rating": 10
   },
   {
-    "id": 29,
+    "id": "29",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf315122735a8b45cf8539df53f8.avif",
     "title": "Двойная пепперони",
     "types": [0, 1],
@@ -300,7 +300,7 @@
     "rating": 10
   },
   {
-    "id": 30,
+    "id": "30",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf47733e787a98ed55d13e9a2251.avif",
     "title": "Четыре сезона",
     "types": [0, 1],
@@ -310,7 +310,7 @@
     "rating": 10
   },
   {
-    "id": 31,
+    "id": "31",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf29e76179b88bdbf2ec5527bba3.avif",
     "title": "Овощи и грибы",
     "types": [0, 1],
@@ -320,7 +320,7 @@
     "rating": 10
   },
   {
-    "id": 32,
+    "id": "32",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf4a963f722a8f2780b4a9b66365.avif",
     "title": "Додо микс",
     "types": [0, 1],
@@ -330,7 +330,7 @@
     "rating": 10
   },
   {
-    "id": 33,
+    "id": "33",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198bf582d24772c8cf624df9d91503b.avif",
     "title": "Мясной микс с говядиной и колбасками",
     "types": [0, 1],
@@ -340,7 +340,7 @@
     "rating": 10
   },
   {
-    "id": 34,
+    "id": "34",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198c34c7163724e8d457fcf25b47e0a.avif",
     "title": "Римская Песто",
     "types": [0, 1],
@@ -350,7 +350,7 @@
     "rating": 10
   },
   {
-    "id": 35,
+    "id": "35",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198c34dfcc67080b7f471fccffd4afe.avif",
     "title": "Римская Песто",
     "types": [0, 1],
@@ -360,7 +360,7 @@
     "rating": 10
   },
   {
-    "id": 36,
+    "id": "36",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198c34ea0c7723aac1648821db230dc.avif",
     "title": "Римская Песто",
     "types": [0, 1],
@@ -370,7 +370,7 @@
     "rating": 10
   },
   {
-    "id": 37,
+    "id": "37",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198c34f3137721b9fffdbc55f92c692.avif",
     "title": "Римская Пепперони",
     "types": [0, 1],
@@ -380,7 +380,7 @@
     "rating": 10
   },
   {
-    "id": 38,
+    "id": "38",
     "imageUrl": "https://media.dodostatic.net/image/r:584x584/0198c34d60ab75cda799d93c7ce7888b.avif",
     "title": "Римская Карбонара",
     "types": [0, 1],
