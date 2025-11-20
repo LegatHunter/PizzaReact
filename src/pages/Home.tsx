@@ -42,7 +42,6 @@ const Home: React.FC = () => {
     const search = searchValue ? `&search=${searchValue}` : ""
 
     dispatch(
-      //@ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -67,7 +66,7 @@ const Home: React.FC = () => {
     isMounted.current = true
   }, [categoryID, sort.sortProp, pageCount, navigate])
 
-  // Парсим параметры из URL при первом рендере
+  // Парcим параметры из URL при первом рендере
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
