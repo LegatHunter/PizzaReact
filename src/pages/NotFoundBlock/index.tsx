@@ -1,5 +1,6 @@
 import styles from "./NotFoundBlock.module.sass"
-export default function NotFoundBlock() {
+
+const NotFoundBlock: React.FC = () => {
   return (
     <h1 className={styles.root}>
       <span>🙈</span>
@@ -8,3 +9,4 @@ export default function NotFoundBlock() {
     </h1>
   )
 }
+export default NotFoundBlock

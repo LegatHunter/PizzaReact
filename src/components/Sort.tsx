@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { selectSort, setSort } from "../redux/slices/filterSlice"
 
-export const list = [
+export const list: SortListItem[] = [
   { name: "популярности ↑", sortProp: "rating" },
   { name: "популярности ↓", sortProp: "-rating" },
   { name: "цене ↑", sortProp: "price" },
@@ -10,13 +10,19 @@ export const list = [
   { name: "алфавиту ↑", sortProp: "title" },
   { name: "алфавиту ↓", sortProp: "-title" },
 ]
-export default function Sort() {
+
+type SortListItem = {
+  name: string
+  sortProp: string
+}
+
+const Sort: React.FC = () => {
   const dispatch = useDispatch()
   const sort = useSelector(selectSort)
   const [toggleSort, setToggleSort] = useState(false)
-  const sortRef = useRef()
+  const sortRef = useRef<HTMLDivElement>(null)
 
-  const autoClose = (obj) => {
+  const autoClose = (obj: SortListItem) => {
     dispatch(setSort(obj))
     setToggleSort(false)
   }
@@ -68,3 +74,5 @@ export default function Sort() {
     </div>
   )
 }
+
+export default Sort

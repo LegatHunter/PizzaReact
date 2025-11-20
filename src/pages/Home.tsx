@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useCallback } from "react"
+import { useEffect, useRef, useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
 
 import qs from "qs"
@@ -16,7 +16,7 @@ import Skeleton from "../components/PizzaBlock/Skeleton"
 import Pagination from "../components/Pagination"
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice"
 
-export default function Home() {
+const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isMounted = useRef(false)
@@ -25,14 +25,14 @@ export default function Home() {
   const { categoryID, sort, pageCount, searchValue } = useSelector(selectFilter)
 
   const onChangeCategory = useCallback(
-    (idx) => {
+    (idx: number) => {
       dispatch(setCategoryID(idx))
     },
     [dispatch]
   )
 
-  const onChangePage = (number) => {
-    dispatch(setPageCount(number))
+  const onChangePage = (page: number) => {
+    dispatch(setPageCount(page))
   }
 
   const getPizzas = async () => {
@@ -42,6 +42,7 @@ export default function Home() {
     const search = searchValue ? `&search=${searchValue}` : ""
 
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -88,7 +89,7 @@ export default function Home() {
     getPizzas()
   }, [categoryID, sort.sortProp, searchValue, pageCount])
 
-  const pizza = items.map((el) => (
+  const pizza = items.map((el: any) => (
     <Link to={`/pizza/${el.id}`} key={el.id}>
       <PizzaBlock {...el} />
     </Link>
@@ -117,3 +118,4 @@ export default function Home() {
     </div>
   )
 }
+export default Home

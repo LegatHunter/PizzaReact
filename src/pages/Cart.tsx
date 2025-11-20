@@ -4,7 +4,7 @@ import CartItem from "../components/CartItem"
 import { clearItems, selectCart } from "../redux/slices/cartSlice"
 import CartEmpty from "../components/CartEmpty"
 
-export default function Cart() {
+const Cart: React.FC = () => {
   const dispatch = useDispatch()
   const { totalPrice, items } = useSelector(selectCart)
 
@@ -15,7 +15,7 @@ export default function Cart() {
   }
 
   // const totalPrice = useSelector((state) => state.cart.totalPrice)
-  const totalCount = items.reduce((acc, item) => {
+  const totalCount = items.reduce((acc: number, item: any) => {
     return acc + item.count
   }, 0)
   if (!totalPrice) {
@@ -33,7 +33,7 @@ export default function Cart() {
             <span>Очистить корзину</span>
           </div>
         </div>
-        {items.map((item) => (
+        {items.map((item: any) => (
           <CartItem key={item.id} {...item} />
         ))}
         <div className='cart__bottom'>
@@ -61,3 +61,5 @@ export default function Cart() {
     </div>
   )
 }
+
+export default Cart

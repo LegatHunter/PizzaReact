@@ -1,7 +1,7 @@
 import Header from "../components/Header"
 import { Outlet } from "react-router-dom"
 
-export default function MainLayout() {
+const MainLayout: React.FC = () => {
   return (
     <div className='wrapper'>
       <Header />
@@ -11,3 +11,4 @@ export default function MainLayout() {
     </div>
   )
 }
+export default MainLayout
