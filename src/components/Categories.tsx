@@ -1,4 +1,4 @@
-// import React, { useState } from "react"
+import { memo } from "react"
 
 type CategoriesProps = {
   categoryID: number
@@ -12,26 +12,25 @@ const categories = [
   "Острые",
   "Римские",
 ]
-const Categories: React.FC<CategoriesProps> = ({
-  onChangeCategory,
-  categoryID,
-}) => {
-  return (
-    <div className='categories'>
-      <ul>
-        {categories.map((cat, i) => {
-          return (
-            <li
-              key={crypto.randomUUID()}
-              onClick={() => onChangeCategory(i)}
-              className={categoryID === i ? "active" : ""}>
-              {cat}
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
-}
+const Categories: React.FC<CategoriesProps> = memo(
+  ({ onChangeCategory, categoryID }) => {
+    return (
+      <div className='categories'>
+        <ul>
+          {categories.map((cat, i) => {
+            return (
+              <li
+                key={crypto.randomUUID()}
+                onClick={() => onChangeCategory(i)}
+                className={categoryID === i ? "active" : ""}>
+                {cat}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  }
+)
 
 export default Categories

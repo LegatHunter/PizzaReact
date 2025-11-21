@@ -2,9 +2,19 @@ import { configureStore } from "@reduxjs/toolkit"
 import filter from "./slices/filterSlice"
 import cart from "./slices/cartSlice"
 import pizzas from "./slices/pizzasSlice"
+import { useDispatch } from "react-redux"
 
 export const store = configureStore({
-  reducer: { filter, cart, pizzas },
+  reducer: {
+    filter,
+    cart,
+    pizzas,
+  },
 })
 
+// Типы для RootState и AppDispatch
 export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+
+// Типизированный хук useDispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()

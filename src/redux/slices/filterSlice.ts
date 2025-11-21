@@ -1,16 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { RootState } from "../store"
 
-type Sort = {
-  name: string
-  sortProp: "rating" | "title" | "price" | "-rating" | "-title" | "-price"
+export enum SortPropertyEnum {
+  RATING_DESC = "rating",
+  RATING_ASC = "-rating",
+  TITLE_DESC = "title",
+  TITLE_ASC = "-title",
+  PRICE_DESC = "price",
+  PRICE_ASC = "-price",
 }
 
-interface IFilterSliceState {
+export type Sort = {
+  name: string
+  sortProp: SortPropertyEnum
+}
+
+export type SortListItem = {
+  name: string
+  sortProp: SortPropertyEnum
+}
+
+export interface IFilterSliceState {
   searchValue: string
   categoryID: number
   pageCount: number
   sort: Sort
+}
+
+export type UrlParams = {
+  sortProp?: SortPropertyEnum
+  categoryID?: string
+  pageCount?: string
 }
 
 const initialState: IFilterSliceState = {
@@ -19,7 +39,7 @@ const initialState: IFilterSliceState = {
   pageCount: 1,
   sort: {
     name: "популярности ↑",
-    sortProp: "rating",
+    sortProp: SortPropertyEnum.RATING_DESC,
   },
 }
 
@@ -39,10 +59,17 @@ const filterSlice = createSlice({
     setPageCount(state, action: PayloadAction<number>) {
       state.pageCount = action.payload
     },
-    setFilters(state, action: PayloadAction<IFilterSliceState>) {
-      state.pageCount = Number(action.payload.pageCount)
+    setFilters(
+      state,
+      action: PayloadAction<{
+        categoryID: number
+        pageCount: number
+        sort: Sort
+      }>
+    ) {
+      state.pageCount = action.payload.pageCount
       state.sort = action.payload.sort
-      state.categoryID = Number(action.payload.categoryID)
+      state.categoryID = action.payload.categoryID
     },
   },
 })

@@ -1,16 +1,19 @@
 import { useEffect, useRef, useCallback } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useSelector } from "react-redux"
+import { useAppDispatch } from "../redux/store"
 
 import qs from "qs"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import {
   setCategoryID,
   setPageCount,
   setFilters,
   selectFilter,
+  Sort as SortType,
+  UrlParams,
 } from "../redux/slices/filterSlice"
 import Categories from "../components/Categories"
-import Sort, { list } from "../components/Sort"
+import SortPopup, { list } from "../components/Sort"
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock"
 import Skeleton from "../components/PizzaBlock/Skeleton"
 import Pagination from "../components/Pagination"
@@ -18,7 +21,7 @@ import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice"
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const isMounted = useRef(false)
 
   const { items, status } = useSelector(selectPizzaData)
@@ -47,7 +50,7 @@ const Home: React.FC = () => {
         order,
         category,
         search,
-        pageCount,
+        pageCount: String(pageCount),
       })
     )
     window.scrollTo(0, 0)
@@ -66,17 +69,17 @@ const Home: React.FC = () => {
     isMounted.current = true
   }, [categoryID, sort.sortProp, pageCount, navigate])
 
-  // Парcим параметры из URL при первом рендере
+  // Парсим параметры из URL при первом рендере
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1))
+      const params = qs.parse(window.location.search.substring(1)) as UrlParams
+
       const sortObj = list.find((obj) => obj.sortProp === params.sortProp)
       dispatch(
         setFilters({
-          ...params,
-          sort: sortObj,
-          categoryID: Number(params.categoryID),
-          pageCount: Number(params.pageCount),
+          categoryID: Number(params.categoryID) || 0,
+          pageCount: Number(params.pageCount) || 1,
+          sort: sortObj || list[0],
         })
       )
     }
@@ -88,11 +91,7 @@ const Home: React.FC = () => {
     getPizzas()
   }, [categoryID, sort.sortProp, searchValue, pageCount])
 
-  const pizza = items.map((el: any) => (
-    <Link to={`/pizza/${el.id}`} key={el.id}>
-      <PizzaBlock {...el} />
-    </Link>
-  ))
+  const pizza = items.map((el) => <PizzaBlock {...el} key={el.id} />)
 
   const skeletons = [...new Array(8)].map((_, i) => <Skeleton key={i} />)
 
@@ -106,7 +105,7 @@ const Home: React.FC = () => {
           categoryID={categoryID}
           onChangeCategory={onChangeCategory}
         />
-        <Sort />
+        <SortPopup value={sort} />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       {isError && (
@@ -117,4 +116,5 @@ const Home: React.FC = () => {
     </div>
   )
 }
+
 export default Home

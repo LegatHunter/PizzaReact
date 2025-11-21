@@ -1,24 +1,28 @@
-import { useEffect, useRef, useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { selectSort, setSort } from "../redux/slices/filterSlice"
+import { memo, useEffect, useRef, useState } from "react"
+import { useDispatch } from "react-redux"
+import { setSort, Sort, SortPropertyEnum } from "../redux/slices/filterSlice"
 
 export const list: SortListItem[] = [
-  { name: "популярности ↑", sortProp: "rating" },
-  { name: "популярности ↓", sortProp: "-rating" },
-  { name: "цене ↑", sortProp: "price" },
-  { name: "цене ↓", sortProp: "-price" },
-  { name: "алфавиту ↑", sortProp: "title" },
-  { name: "алфавиту ↓", sortProp: "-title" },
+  { name: "популярности ↑", sortProp: SortPropertyEnum.RATING_DESC },
+  { name: "популярности ↓", sortProp: SortPropertyEnum.RATING_ASC },
+  { name: "цене ↑", sortProp: SortPropertyEnum.PRICE_DESC },
+  { name: "цене ↓", sortProp: SortPropertyEnum.PRICE_ASC },
+  { name: "алфавиту ↑", sortProp: SortPropertyEnum.TITLE_DESC },
+  { name: "алфавиту ↓", sortProp: SortPropertyEnum.TITLE_ASC },
 ]
 
 type SortListItem = {
   name: string
-  sortProp: string
+  sortProp: SortPropertyEnum
 }
 
-const Sort: React.FC = () => {
+type SortPopupProps = {
+  value: Sort
+}
+
+const SortPopup: React.FC<SortPopupProps> = memo(({ value }) => {
   const dispatch = useDispatch()
-  const sort = useSelector(selectSort)
+
   const [toggleSort, setToggleSort] = useState(false)
   const sortRef = useRef<HTMLDivElement>(null)
 
@@ -53,7 +57,7 @@ const Sort: React.FC = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setToggleSort((prev) => !prev)}>{sort.name}</span>
+        <span onClick={() => setToggleSort((prev) => !prev)}>{value.name}</span>
       </div>
       {toggleSort && (
         <div className='sort__popup'>
@@ -63,7 +67,7 @@ const Sort: React.FC = () => {
                 <li
                   key={i}
                   onClick={() => autoClose(el)}
-                  className={sort.sortProp === el.sortProp ? "active" : ""}>
+                  className={value.sortProp === el.sortProp ? "active" : ""}>
                   {el.name}
                 </li>
               )
@@ -73,6 +77,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   )
-}
+})
 
-export default Sort
+export default SortPopup
