@@ -2,11 +2,12 @@ import { Link, useLocation } from "react-router-dom"
 import Search from "./Search"
 import { useSelector } from "react-redux"
 import { selectCart } from "../redux/slices/cartSlice"
+import { useEffect, useRef } from "react"
 
 const Header: React.FC = () => {
   const { items, totalPrice } = useSelector(selectCart)
-
   const location = useLocation()
+  const isMounted = useRef(false)
 
   const totalCount: number = items.reduce(
     (acc: number, item: { count: number }) => {
@@ -14,6 +15,13 @@ const Header: React.FC = () => {
     },
     0
   )
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items)
+      localStorage.setItem("cart", json)
+    }
+    isMounted.current = true
+  }, [items])
   return (
     <div className='header'>
       <div className='container'>
